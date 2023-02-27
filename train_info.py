@@ -7,9 +7,7 @@ import requests
 import json
 
 from PIL import Image, ImageTk
-from datetime import datetime, timedelta
-import time
-import threading
+from datetime import datetime
 
 # .envファイルを読み込む
 load_dotenv()
@@ -59,7 +57,8 @@ class MainFrame(ttk.Frame):
         self.wt=Label(self.frame, text="運行情報", bg="#333", font=("", 40), fg="white")
         self.wt.place(width=200, x=10, y=10)
 
-        self.clock = Label(root, font=("times", 40, "bold"), text="000000")
+        # 時計を配置
+        self.clock = Label(root, bg="#333", fg="white", font=("times", 40, "bold"), text="000000")
         self.clock.place(width=420, x=300, y=10)
 
 
@@ -82,9 +81,9 @@ class MainFrame(ttk.Frame):
 
         # 路線リスト
         self.wwl = [
-            Label(self, text="東西線",  bg="#555", font=("", 30, "bold"), image=self.icon_dict["tozai"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#009BBF"),
-            Label(self, text="半蔵門線",  bg="#555", font=("", 30, "bold"), image=self.icon_dict["hanzomon"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#8F76D6"),
-            Label(self, text="都営新宿",  bg="#555", font=("", 30, "bold"), image=self.icon_dict["shinjuku"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#B3C146"),
+            Label(self, text="東西線",  bg="#555", fg="white", font=("", 30, "bold"), image=self.icon_dict["tozai"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#009BBF"),
+            Label(self, text="半蔵門線",  bg="#555", fg="white", font=("", 30, "bold"), image=self.icon_dict["hanzomon"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#8F76D6"),
+            Label(self, text="都営新宿線",  bg="#555", fg="white", font=("", 30, "bold"), image=self.icon_dict["shinjuku"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#B3C146"),
         ]
 
         # 運行アイコンの初期配置辞書
@@ -163,8 +162,6 @@ def tick():
     # 時刻設定
     app.clock.config(text=text)
     app.clock.after(1000, tick)
-tick()
-
 
 def update_train_info():
     count = 0
@@ -196,6 +193,7 @@ def update_train_info():
     return
 
 # 初回起動
+tick()
 update_train_info()
 
 # メインループ
