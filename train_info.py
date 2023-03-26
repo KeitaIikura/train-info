@@ -113,6 +113,10 @@ class MainFrame(ttk.Frame):
         for i in range(len(self.wwt)):
             self.wwt[i].grid(row=3, column=i, sticky="news")
 
+        # 余白表示（他情報表示予定）
+        for i in range(3):
+            Message(self, bg="#333", fg="white", font=("", 20), width=340).grid(row=4, column=i, sticky="news")
+
         # レイアウト
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
@@ -147,7 +151,7 @@ root.bind('<Configure>', change_size)
 
 
 # メインウィンドウの最大化
-#root.attributes("-zoom", "1")
+# root.attributes("-zoom", "1")
 # root.attributes("-fullscreen", "1")
 
 # 常に最前面に表示
@@ -171,7 +175,7 @@ def update_train_info():
         res = requests.get(url_dict[item])
         data = json.loads(res.text)
         info_text = data[0]["odpt:trainInformationText"]["ja"]
-        print("更新")
+        print(f'{item}: 更新')
 
         # 運行状況の分岐
         if info_text in ["現在、平常どおり運転しています。" ,"現在、１５分以上の遅延はありません。" ]:
