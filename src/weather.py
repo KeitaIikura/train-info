@@ -50,6 +50,3 @@ class WeatherInfo:
         url = f"https://api.openweathermap.org/data/2.5/forecast?zip={zip_code},JP&units=metric&appid={self.api_key}"
         response = requests.get(url)
         return response.json()
-
-weather = WeatherInfo(WEATHER_API_KEY)
-pprint(weather.get_current_weather("134-0083"))
