@@ -63,13 +63,13 @@ class MainFrame(ttk.Frame):
 
         # このスクリプトの絶対パス
         self.scr_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-        #タイトルの表示
-        self.wt=Label(self.frame, text="運行情報", bg="#333", font=("", 40), fg="white")
-        self.wt.place(width=200, x=10, y=10)
+        # タイトルの表示（見切れないようにフォントを少し小さくする）
+        self.wt = Label(self.frame, text="運行情報", bg="#333", font=("", 34), fg="white")
+        self.wt.place(width=180, x=10, y=10)
 
-        # 時計を配置
-        self.clock = Label(root, bg="#333", fg="white", font=("times", 40, "bold"), text="000000")
-        self.clock.place(width=420, x=300, y=10)
+        # 時計を配置（秒まで表示しても見切れないようにフォントと幅を調整）
+        self.clock = Label(root, bg="#333", fg="white", font=("times", 32, "bold"), text="000000")
+        self.clock.place(width=500, x=230, y=14)
 
         # 天気を表示（位置は右上）
         self.weather_info = Label(self.frame, text="", bg="#333", font=("", 16), fg="white", justify=LEFT, anchor="w")
