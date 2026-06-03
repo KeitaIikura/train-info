@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Union
 
 import requests
 
@@ -27,7 +28,7 @@ class WeatherInfo:
         index = round(degree / 22.5) % 16
         return directions[index]
 
-    def get_current_weather(self, zip_code: str | int):
+    def get_current_weather(self, zip_code: Union[str, int]):
         url = f"https://api.openweathermap.org/data/2.5/weather?zip={zip_code},JP&units=metric&appid={self.api_key}"
         response = requests.get(url, timeout=self.timeout)
         response.raise_for_status()
@@ -47,7 +48,7 @@ class WeatherInfo:
             icon_url=f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png",
         )
 
-    def get_weather_forecast(self, zip_code: str | int):
+    def get_weather_forecast(self, zip_code: Union[str, int]):
         url = f"https://api.openweathermap.org/data/2.5/forecast?zip={zip_code},JP&units=metric&appid={self.api_key}"
         response = requests.get(url, timeout=self.timeout)
         response.raise_for_status()
