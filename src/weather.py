@@ -3,6 +3,8 @@ from typing import Union
 
 import requests
 
+# Python 3.9以前では `str | int` の型ヒントが実行時エラーになるため、Unionを使う。
+
 
 @dataclass
 class WeatherData:
