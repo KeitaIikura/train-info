@@ -1,11 +1,7 @@
-import os
-import requests
-from dotenv import load_dotenv
-from pprint import pprint
 from dataclasses import dataclass
-load_dotenv()
 
-WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+import requests
+
 
 @dataclass
 class WeatherData:
@@ -19,9 +15,11 @@ class WeatherData:
     wind_deg: str
     icon_url: str
 
+
 class WeatherInfo:
-    def __init__(self, api_key):
+    def __init__(self, api_key, timeout=(5, 15)):
         self.api_key = api_key
+        self.timeout = timeout
 
     @staticmethod
     def degree_to_direction(degree):
@@ -31,8 +29,11 @@ class WeatherInfo:
 
     def get_current_weather(self, zip_code: str | int):
         url = f"https://api.openweathermap.org/data/2.5/weather?zip={zip_code},JP&units=metric&appid={self.api_key}"
-        response = requests.get(url)
+        response = requests.get(url, timeout=self.timeout)
+        response.raise_for_status()
         data = response.json()
+
+        wind_deg = data.get("wind", {}).get("deg")
 
         return WeatherData(
             temp=data["main"]["temp"],
@@ -42,11 +43,12 @@ class WeatherInfo:
             pressure=data["main"]["pressure"],
             humidity=data["main"]["humidity"],
             wind_speed=data["wind"]["speed"],
-            wind_deg=self.degree_to_direction(data["wind"]["deg"]),
-            icon_url=f"http://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png",
+            wind_deg=self.degree_to_direction(wind_deg) if wind_deg is not None else "不明",
+            icon_url=f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png",
         )
 
     def get_weather_forecast(self, zip_code: str | int):
         url = f"https://api.openweathermap.org/data/2.5/forecast?zip={zip_code},JP&units=metric&appid={self.api_key}"
-        response = requests.get(url)
+        response = requests.get(url, timeout=self.timeout)
+        response.raise_for_status()
         return response.json()
