@@ -33,10 +33,10 @@ root.title("info")
 url_dict = {
     "東西線": f'https://api.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:TokyoMetro&odpt:railway=odpt.Railway:TokyoMetro.Tozai&acl:consumerKey={ACCESS_KEY}',
     "半蔵門線": f'https://api.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:TokyoMetro&odpt:railway=odpt.Railway:TokyoMetro.Hanzomon&acl:consumerKey={ACCESS_KEY}',
-    "都営新宿線": 'https://api-public.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:Toei&odpt:railway=odpt.Railway:Toei.Shinjuku'
+    "銀座線": f'https://api.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:TokyoMetro&odpt:railway=odpt.Railway:TokyoMetro.Ginza&acl:consumerKey={ACCESS_KEY}'
 }
 train_list = [
-    "東西線", "半蔵門線", "都営新宿線"
+    "東西線", "半蔵門線", "銀座線"
 ]
 
 
@@ -84,7 +84,7 @@ class MainFrame(ttk.Frame):
         self.icon_dict = {
             "tozai": Image.open(self.scr_path + "/img/T.png"),
             "hanzomon": Image.open(self.scr_path + "/img/Z.png"),
-            "shinjuku": Image.open(self.scr_path + "/img/TS.png"),
+            "ginza": Image.open(self.scr_path + "/img/G.png"),
             "normal": Image.open(self.scr_path + "/img/normal.png"),
             "warning": Image.open(self.scr_path + "/img/warning.png"),
         }
@@ -100,7 +100,7 @@ class MainFrame(ttk.Frame):
         self.wwl = [
             Label(self, text="東西線",  bg="#555", fg="white", font=("", 30, "bold"), image=self.icon_dict["tozai"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#009BBF"),
             Label(self, text="半蔵門線",  bg="#555", fg="white", font=("", 30, "bold"), image=self.icon_dict["hanzomon"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#8F76D6"),
-            Label(self, text="都営新宿線",  bg="#555", fg="white", font=("", 30, "bold"), image=self.icon_dict["shinjuku"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#B3C146"),
+            Label(self, text="銀座線",  bg="#555", fg="white", font=("", 30, "bold"), image=self.icon_dict["ginza"], compound=LEFT, width=340, highlightthickness=4, highlightbackground="#F39700"),
         ]
 
         # 運行アイコンの初期配置辞書
@@ -142,6 +142,7 @@ class MainFrame(ttk.Frame):
         self.rowconfigure(4, weight=1)
         for i in range(len(self.wwl)):
             self.columnconfigure(i, weight=1)
+
 
     def update_weather_info(self):
         try:
